@@ -1,4 +1,5 @@
 use sdl2::event::Event;
+use sdl2::keyboard::Keycode;
 use sdl2::mouse::MouseButton;
 use sdl2::rect::Rect;
 use sdl2::render::Canvas;
@@ -59,20 +60,33 @@ impl Engine {
     pub fn poll(&mut self) -> EngineEvent {
         match self.event_pump.wait_event() {
             Event::Quit { .. } => EngineEvent::Exit,
+           
+            Event::KeyDown { keycode, ..} => {
+                if let Some(key) = keycode {
+                    // TODO: Jos key on välilyönti, palauta EngineEvent::Clear
+                    match key {
+                        Keycode::ESCAPE => EngineEvent::Exit,
+                        _ => EngineEvent::None
+                    }
+                } else {
+                    EngineEvent::None
+                }
+            }
+
             Event::MouseButtonDown { mouse_btn, mut x,  mut y, .. } => {
-            if mouse_btn == MouseButton::Left {
-                if x < WIDTH as i32/3 { x = 0 }
-                else if x < WIDTH as i32/3*2 { x = 1 }
-                else { x = 2 }
+                if mouse_btn == MouseButton::Left {
+                    if x < WIDTH as i32/3 { x = 0 }
+                    else if x < WIDTH as i32/3*2 { x = 1 }
+                    else { x = 2 }
 
-                if y < HEIGHT as i32/3 { y = 0 }
-                else if y < HEIGHT as i32/3*2 { y = 1 }
-                else { y = 2 }
+                    if y < HEIGHT as i32/3 { y = 0 }
+                    else if y < HEIGHT as i32/3*2 { y = 1 }
+                    else { y = 2 }
 
-                return EngineEvent::Click(x, y)
-            } 
-            EngineEvent::None
-        }
+                    return EngineEvent::Click(x, y)
+                } 
+                EngineEvent::None
+            }
         _ => EngineEvent::None 
         }
     }
@@ -82,7 +96,8 @@ impl Engine {
 pub enum EngineEvent {
     Click(i32, i32), //(x, y)
     Exit,
-    None
+    None,
+    Clear,
 }
 
 pub trait Render {

@@ -41,6 +41,10 @@ impl GameState {
         }
     }
 
+    pub fn clear_board(&mut self) {
+        self.grid = [[None; 3]; 3]
+    }
+
     fn switch_turns(&mut self) {
         self.turn = match self.turn {
             Player::O => Player::X,
