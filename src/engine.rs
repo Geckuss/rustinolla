@@ -40,7 +40,7 @@ impl Engine {
         })
     }
 
-    pub fn render(&mut self, game_state: &GameState) -> Result<(), String> {
+    pub fn render(&mut self, render_object: &dyn Render) -> Result<(), String> {
         self.canvas.set_draw_color(Color::RGB(40, 40, 40));
         self.canvas.clear();
         self.canvas.set_draw_color(Color::RGB(80, 80, 80));
@@ -52,7 +52,7 @@ impl Engine {
                 Rect::new(0, (i*(HEIGHT as i32/3))-5, HEIGHT, 10)
             )?;
         }
-        game_state.render(&mut self.canvas)?;
+        render_object.render(&mut self.canvas)?;
         self.canvas.present();
         Ok(())
     }
