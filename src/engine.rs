@@ -6,7 +6,6 @@ use sdl2::render::Canvas;
 use sdl2::video::Window;
 use sdl2::EventPump;
 use sdl2::pixels::Color;
-use crate::GameState;
 use crate::{WIDTH, HEIGHT};
 
 pub struct Engine {
@@ -63,9 +62,9 @@ impl Engine {
            
             Event::KeyDown { keycode, ..} => {
                 if let Some(key) = keycode {
-                    // TODO: Jos key on välilyönti, palauta EngineEvent::Clear
                     match key {
                         Keycode::ESCAPE => EngineEvent::Exit,
+                    // TODO (teht. 1): Jos key on välilyönti, palauta EngineEvent::Clear
                         _ => EngineEvent::None
                     }
                 } else {

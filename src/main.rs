@@ -14,30 +14,27 @@ const WIDTH: u32 = 800;
 const HEIGHT: u32 = 800;
 
 pub fn main() -> Result<(), String>{
-    println!("{}", distance((10, 15), (40, 60)));
     let mut game_state = GameState::empty();
     let mut engine = Engine::init()?;
     let mut running = true;
 
     // main loop
     while running {
-        match engine.poll() {
+        let engine_event = engine.poll();
+        match engine_event {
             EngineEvent::Click(x, y) => {
-
                 game_state.set_square(x, y, game_state.turn);
-
                 if let Some(winner) = game_state.has_a_winner() {
                     println!("{:?} won the game!", winner);
                     running = false
                 } else if game_state.is_full() {
                     println!("Tie!");
-                    running = false
+                    game_state.clear_board()
                 }
             },
             EngineEvent::Exit => running = false,
-            EngineEvent::None => {},
-            // TODO: Jos engine.poll() palauttaa EngineEvent::Clear, tyhjennä lauta.
-            // GameState-tyyppi tarjoaa metodin clear_board().
+            // TODO (teht. 1): Jos engine.poll() palauttaa EngineEvent::Clear, tyhjennä lauta.
+            _ => {},
         }
         engine.render(&game_state)?;
     }
