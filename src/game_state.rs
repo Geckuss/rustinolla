@@ -1,6 +1,14 @@
-use rand::prelude::*;
-use crate::Player;
+use sdl2::render::Canvas;
+use sdl2::video::Window;
+use crate::{WIDTH, HEIGHT, BLUE, RED};
+use crate::Render;
+use crate::engine::draw_circle;
 
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
+pub enum Player {
+    X,
+    O
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
 pub struct GameState {
@@ -9,22 +17,6 @@ pub struct GameState {
 }
 
 impl GameState {
-
-    pub fn _random() -> Self {
-        let mut grid = [[None; 3]; 3];
-        let mut rng = rand::thread_rng();
-        for i in 0..3 {
-            for j in 0..3 {
-                grid[i][j] = match rng.gen_range(0..3) {
-                    0 => Some(Player::X),
-                    1 => Some(Player::O),
-                    _ => None
-                }
-            }      
-        }
-        GameState { grid, turn: Player::X }
-    }
-
     pub fn set_square(&mut self, x: i32, y: i32, player: Player) {
         let x = x as usize;
         let y = y as usize;
@@ -57,5 +49,37 @@ impl GameState {
             .iter()
             .filter(|row| row.contains(&None))
             .count() == 0
+    }    
+    
+    pub fn has_a_winner(&self) -> Option<Player> {
+        // TODO (teht. 2): Toteuta funktio.
+
+
+        None
+    }
+}
+
+impl Render for GameState {
+    fn render(&self, canvas: &mut Canvas<Window>) -> Result<(), String> {
+        for x in 0..3_u32 {
+            for y in 0..3_u32 {
+                if let Some(player) = self.grid[x as usize][y as usize] {
+                    
+                    // Lasketaan ruudun keskikohta (pikselikoordinaatit)
+                    let x = WIDTH/3*x + WIDTH/6;
+                    let y = HEIGHT/3*y + HEIGHT/6;
+
+                    // Valitaan väri pelaajan mukaan
+                    canvas.set_draw_color(match player {
+                        Player::O => BLUE,
+                        Player::X => RED,
+                    });
+
+                    draw_circle(x as i32, y as i32, 20, canvas)?;
+                }
+            }
+        }
+
+        Ok(())
     }
 }
