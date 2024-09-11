@@ -27,3 +27,5 @@ todo: SDL2 asennusohjeet Macille (eroaako applen ja intelin prossuilla?)
 4. Toista sama asetukselle "View: Toggle Terminal" ja aseta pikanäppäimeksi  **Ctrl/Cmd + ö**.
 
 #### Siirrä terminaali ja *Problems*-paneeli näytön oikeaan reunaan
+
+## Cargo

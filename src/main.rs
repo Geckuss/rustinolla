@@ -1,18 +1,14 @@
+// Projektissa käytettyjä moduuleja
 mod engine;
-use crate::engine::{Engine, EngineEvent, Render};
-use sdl2::pixels::Color;
-
 mod game_state;
-use game_state::{GameState, Player};
 
-const RED: Color = Color::RGB(255, 0, 0);
-const BLUE: Color = Color::RGB(0, 0, 255);
-const WIDTH: u32 = 800;
-const HEIGHT: u32 = 800;
+// Importteja
+use engine::Engine;
+use game_state::GameState;
+use rustinolla::EngineEvent;
 
 
 pub fn main() -> Result<(), String>{
-    println!("{:?}", Player::X);
     let mut game_state = GameState::empty();
     let mut engine = Engine::init()?;
     let mut running = true;

@@ -6,7 +6,8 @@ use sdl2::render::Canvas;
 use sdl2::video::Window;
 use sdl2::EventPump;
 use sdl2::pixels::Color;
-use crate::{WIDTH, HEIGHT};
+use rustinolla::{WIDTH, HEIGHT};
+use rustinolla::{Render, EngineEvent};
 
 pub struct Engine {
   canvas: Canvas<Window>,
@@ -21,7 +22,7 @@ impl Engine {
             .unwrap();
 
         let window = video_subsystem
-            .window("Pöhinä", WIDTH, HEIGHT)
+            .window("Rustinolla", WIDTH, HEIGHT)
             .position_centered()
             .build()
             .unwrap();
@@ -61,10 +62,10 @@ impl Engine {
             Event::Quit { .. } => EngineEvent::Exit,
            
             Event::KeyDown { keycode, ..} => {
-                if let Some(key) = keycode {
-                    match key {
+                if let Some(keycode) = keycode {
+                    match keycode {
                         Keycode::ESCAPE => EngineEvent::Exit,
-                    // TODO (teht. 1): Jos key on välilyönti, palauta EngineEvent::Clear
+                        // TODO (teht. 1): Jos keycode on välilyönti, palauta EngineEvent::Clear
                         _ => EngineEvent::None
                     }
                 } else {
@@ -89,33 +90,4 @@ impl Engine {
         _ => EngineEvent::None 
         }
     }
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum EngineEvent {
-    Click(i32, i32), //(x, y)
-    Exit,
-    None,
-    Clear,
-}
-
-pub trait Render {
-    fn render(&self, canvas: &mut Canvas<Window>) -> Result<(), String>;
-}
-
-pub fn draw_circle(center_x: i32, center_y: i32, radius: i32, canvas: &mut Canvas<Window>)
--> Result<(), String> {
-    for x in center_x-radius..center_x+radius {
-        for y in center_y-radius..center_y+radius {
-            if distance((x, y), (center_x, center_y)) <= radius {
-                canvas.draw_point((x, y))?;
-            }
-        }
-    }
-
-    Ok(())
-}
-
-fn distance(p1: (i32, i32), p2: (i32, i32)) -> i32 {
-    f32::sqrt((p2.0-p1.0).pow(2) as f32 + (p2.1-p1.1).pow(2) as f32) as i32
 }
