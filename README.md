@@ -29,3 +29,5 @@ todo: SDL2 asennusohjeet Macille (eroaako applen ja intelin prossuilla?)
 #### Siirrä terminaali ja *Problems*-paneeli näytön oikeaan reunaan
 
 ## Cargo
+
+Cargo on Rustin mukana tuleva työkalu, joka tekee projektien hallinan, kääntämisen ja suorittamisen erittäin helpoksi. Kun olet asentanut kaiken, voit ajaa tämän projektin terminaalista komennolla **cargo run**.

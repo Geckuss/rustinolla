@@ -40,7 +40,7 @@ impl Engine {
         })
     }
 
-    pub fn render(&mut self, render_object: &dyn Render) -> Result<(), String> {
+    pub fn draw_backround(&mut self) -> Result<(), String> {
         self.canvas.set_draw_color(Color::RGB(40, 40, 40));
         self.canvas.clear();
         self.canvas.set_draw_color(Color::RGB(80, 80, 80));
@@ -52,9 +52,16 @@ impl Engine {
                 Rect::new(0, (i*(HEIGHT as i32/3))-5, HEIGHT, 10)
             )?;
         }
-        render_object.render(&mut self.canvas)?;
-        self.canvas.present();
         Ok(())
+    }
+
+    pub fn render(&mut self, object: &dyn Render) -> Result<(), String> {
+        object.render(&mut self.canvas)?;
+        Ok(())
+    }
+
+    pub fn present(&mut self) {
+        self.canvas.present()
     }
 
     pub fn poll(&mut self) -> EngineEvent {

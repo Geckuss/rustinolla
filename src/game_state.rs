@@ -67,16 +67,11 @@ impl Render for GameState {
                         Player::X => RED,
                     });
                     
-                    // TODO T3: Poista alla oleva rivi
-                    draw_circle(x as i32, y as i32, 20, canvas)?;
 
-                    // TODO T3: Poista kommenttirivit match-blokin ympäriltä
-                    /*
                     match player {
-                        Player::O => draw_circle(x as i32, y as i32, 20, canvas)?,
-                        Player::X => draw_x(x as i32, y as i32, 50, canvas)?,
+                        Player::O => draw_circle(x as i32, y as i32, WIDTH/10, canvas)?,
+                        Player::X =>      draw_x(x as i32, y as i32, WIDTH/10, canvas)?,
                     }
-                    */
                 }
             }
         }
@@ -85,9 +80,10 @@ impl Render for GameState {
     }
 }
 
-// Apufunktioita
-fn draw_circle(center_x: i32, center_y: i32, radius: i32, canvas: &mut Canvas<Window>)
+// Apufunktiot
+fn draw_circle(center_x: i32, center_y: i32, radius: u32, canvas: &mut Canvas<Window>)
 -> Result<(), String> {
+    let radius = radius as i32;
     for x in center_x-radius..center_x+radius {
         for y in center_y-radius..center_y+radius {
             if distance((x, y), (center_x, center_y)) <= radius {
@@ -98,11 +94,22 @@ fn draw_circle(center_x: i32, center_y: i32, radius: i32, canvas: &mut Canvas<Wi
     Ok(())
 }
 
-fn draw_x(center_x: i32, center_y: i32, width: i32, canvas: &mut Canvas<Window>) 
+fn draw_x(center_x: i32, center_y: i32, size: u32, canvas: &mut Canvas<Window>) 
 -> Result<(), String> {
-    // TODO T3: Toteuta funktio. Inspiraatiota voit hakea yläpuoleisesta funktiosta. 
-    draw_circle(center_x, center_y, width, canvas)?;
-
+    let size = size as i32;
+    /* TODO T3: 
+        Toteuta funktio, joka piirtää haluamasi kuvion. Tämän pohjan for-loopit käyvät läpi
+        jokaisen pikselin koordinaatit parametreissä annettujen tietojen mukaan. Niiden sisälle
+        voit keksiä erilaisia sääntöjä, joiden perusteella annettu pikseli väritetään.
+    */
+    for x in center_x-size..center_x+size {
+        for y in center_y-size..center_y+size {
+            // Poista tämä ennen kuin aloitat
+            if x == center_x && y == center_y {
+                draw_circle(center_x, center_y, size as u32, canvas)?;
+            }
+        }
+    }
     Ok(())
 }
 
