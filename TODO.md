@@ -6,12 +6,12 @@ Ohjelman main-funktiosta löytyvässä main loopissa pysähdytään odottamaan k
 
 Tehtävän olet suorittanut onnistuneesti, kun välilyönnin painaminen aiheuttaa peliruudukon tyhjenemisen.
 
-- [ ] Lisää rivi tiedossa *engine.rs* olevaan metodiin *pub fn poll(&mut self) -> EngineEvent*, joka saa sen palauttamaan enum-variantin
+- [ ] Lisää rivi tiedostossa *engine.rs* olevaan metodiin *pub fn poll(&mut self) -> EngineEvent*, joka saa sen palauttamaan enum-variantin
 
         EngineEvent::Clear
 
     käyttäjän painaessa välilyöntiä.
-- [ ] Lisää pelin main-looppiin rivi, joka vastaa pelitilan nollaamisesta poll-funktion palauttaessa Clear-komennon. Ainekset tämän suorittamiseen löydät tutkimalla main-looppia.
+- [ ] Lisää pelin main-looppiin rivi, joka vastaa pelitilan nollaamisesta poll-funktion palauttaessa Clear-komennon. Voit käyttää tähän GameState:n metodia reset();
 
 ## 2. Voittajan selvittäminen: algoritmi
 

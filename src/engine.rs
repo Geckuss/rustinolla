@@ -49,7 +49,7 @@ impl Engine {
                 Rect::new((i*(WIDTH as i32/3))-5, 0, 10, HEIGHT)
             )?;
             self.canvas.fill_rect(
-                Rect::new(0, (i*(HEIGHT as i32/3))-5, HEIGHT, 10)
+                Rect::new(0, (i*(HEIGHT as i32/3))-5, WIDTH, 10)
             )?;
         }
         Ok(())

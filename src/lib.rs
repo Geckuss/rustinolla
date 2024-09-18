@@ -6,8 +6,8 @@ use sdl2::pixels::Color;
 // Globaaleja vakioita
 pub const RED: Color = Color::RGB(255, 0, 0);
 pub const BLUE: Color = Color::RGB(0, 0, 255);
-pub const WIDTH: u32 = 480;
-pub const HEIGHT: u32 = 480;
+pub const WIDTH: u32 = 800;
+pub const HEIGHT: u32 = 800;
 
 // Rustin versio rajapinnoista. 
 pub trait Render {

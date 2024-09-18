@@ -26,7 +26,6 @@ pub fn main() -> Result<(), String>{
             },
             EngineEvent::Exit => running = false,
             // TODO (teht. 1): Jos engine.poll() palauttaa EngineEvent::Clear, tyhjennä lauta.
-            // Huom! GameState-structilta löytyy metodi clear_board(), jota tähän tehtävään kannattaa käyttää.
             _ => {},
         };
 

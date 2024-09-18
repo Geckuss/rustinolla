@@ -9,9 +9,10 @@
 
 - **Kopioi** kansion *SDL2-devel-2.30.6-VC\SDL2-2.30.6\lib\x64* sisältö (neljä tiedostoa) kohteeseen *C:\Users\omanimi\\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib*
 
-### Mac
+### Mac 'SDL2-2.30.6.dmg'
 
-todo: SDL2 asennusohjeet Macille (eroaako applen ja intelin prossuilla?)
+- **Avaa** lataamasi tiedosto, ja raahaa 'SDL2.Framework' kansioon '/System/Library/Frameworks/'
+
 
 ## Visual Studio Code
 

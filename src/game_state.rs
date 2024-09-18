@@ -13,9 +13,7 @@ pub struct GameState {
 // Metodit
 impl GameState {
     pub fn set_square(&mut self, x: i32, y: i32, player: Player) {
-        let x = x as usize;
-        let y = y as usize;
-        if x < 3 && y < 3 && self.grid[x][y].is_none() {
+        if x < 3 && y < 3 && self.grid[x as usize][y as usize].is_none() {
             self.grid[x as usize][y as usize] = Some(player);
             self.switch_turns()
         }
@@ -28,8 +26,9 @@ impl GameState {
         }
     }
 
-    pub fn clear_board(&mut self) {
-        self.grid = [[None; 3]; 3]
+    pub fn reset(&mut self) {
+        self.grid = [[None; 3]; 3];
+        self.turn = Player::X;
     }
 
     fn switch_turns(&mut self) {
@@ -70,7 +69,7 @@ impl Render for GameState {
 
                     match player {
                         Player::O => draw_circle(x as i32, y as i32, WIDTH/10, canvas)?,
-                        Player::X =>      draw_x(x as i32, y as i32, WIDTH/10, canvas)?,
+                        Player::X => draw_x(x as i32, y as i32, WIDTH/10, canvas)?,
                     }
                 }
             }
@@ -81,6 +80,7 @@ impl Render for GameState {
 }
 
 // Apufunktiot
+
 fn draw_circle(center_x: i32, center_y: i32, radius: u32, canvas: &mut Canvas<Window>)
 -> Result<(), String> {
     let radius = radius as i32;
@@ -105,9 +105,7 @@ fn draw_x(center_x: i32, center_y: i32, size: u32, canvas: &mut Canvas<Window>)
     for x in center_x-size..center_x+size {
         for y in center_y-size..center_y+size {
             // Poista tämä ennen kuin aloitat
-            if x == center_x && y == center_y {
-                draw_circle(center_x, center_y, size as u32, canvas)?;
-            }
+            canvas.draw_point((x, y))?;
         }
     }
     Ok(())
