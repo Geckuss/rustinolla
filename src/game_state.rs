@@ -84,8 +84,10 @@ impl Render for GameState {
 fn draw_circle(center_x: i32, center_y: i32, radius: u32, canvas: &mut Canvas<Window>)
 -> Result<(), String> {
     let radius = radius as i32;
+    // TODO T4: Määrittele toinen, pienempi säde "inner radius", joka määrittelee ympyrän reunan paksuuden.
     for x in center_x-radius..center_x+radius {
         for y in center_y-radius..center_y+radius {
+            // TODO T4: Lisää if-lauseeseen inner radius siten, että sitä lähempänä olecat pikselit jätetään rauhaan.
             if distance((x, y), (center_x, center_y)) <= radius {
                 canvas.draw_point((x, y))?;
             }
@@ -99,13 +101,15 @@ fn draw_x(center_x: i32, center_y: i32, size: u32, canvas: &mut Canvas<Window>)
     let size = size as i32;
     /* TODO T3: 
         Toteuta funktio, joka piirtää haluamasi kuvion. Tämän pohjan for-loopit käyvät läpi
-        jokaisen pikselin koordinaatit parametreissä annettujen tietojen mukaan. Niiden sisälle
+        jokaisen pikselin koordinaatit parametreissä annettujen arvojen mukaan. Niiden sisälle
         voit keksiä erilaisia sääntöjä, joiden perusteella annettu pikseli väritetään.
     */
     for x in center_x-size..center_x+size {
         for y in center_y-size..center_y+size {
-            // Poista tämä ennen kuin aloitat
-            canvas.draw_point((x, y))?;
+            // Poista tämä if-blokki ennen kuin aloitat
+            if center_x == x && center_y == y {
+                draw_circle(center_x, center_y, size as u32, canvas)?;
+            }
         }
     }
     Ok(())

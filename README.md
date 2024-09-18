@@ -31,4 +31,4 @@
 
 ## Cargo
 
-Cargo on Rustin mukana tuleva työkalu, joka tekee projektien hallinan, kääntämisen ja suorittamisen erittäin helpoksi. Kun olet asentanut kaiken, voit ajaa tämän projektin terminaalista komennolla **cargo run**.
+Cargo on Rustin mukana tuleva työkalu, joka tekee projektien hallinan, kääntämisen ja suorittamisen erittäin helpoksi. Kun olet asentanut kaiken, voit ajaa tämän projektin terminaalista komennolla **cargo run**. Jatkossa ohjelman ajaminen onnistuu yksinkertaisesti avaamalla konsolin (Ctrl/Cmd + ö), painamalla ylänuolta ja enteriä.
