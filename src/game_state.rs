@@ -6,15 +6,15 @@ use rustinolla::{Render, Player};
 // Deklaraatio
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
 pub struct GameState {
-    pub grid: [[Option<Player>; 3]; 3],
-    pub turn: Player
+    grid: [[Option<Player>; 3]; 3],
+    turn: Player
 }
 
 // Metodit
 impl GameState {
-    pub fn set_square(&mut self, x: i32, y: i32, player: Player) {
+    pub fn set_square(&mut self, x: i32, y: i32) {
         if x < 3 && y < 3 && self.grid[x as usize][y as usize].is_none() {
-            self.grid[x as usize][y as usize] = Some(player);
+            self.grid[x as usize][y as usize] = Some(self.turn);
             self.switch_turns()
         }
     }
@@ -55,18 +55,19 @@ impl GameState {
 // Render traitin implementaatio
 impl Render for GameState {
     fn render(&self, canvas: &mut Canvas<Window>) -> Result<(), String> {
+
+        // Piiretään pelaajien merkinnät
         for x in 0..3_u32 {
             for y in 0..3_u32 {
                 if let Some(player) = self.grid[x as usize][y as usize] {
                     let x = WIDTH/3*x + WIDTH/6;
-                    let y = HEIGHT/3*y + HEIGHT/6;
+                    let y = (HEIGHT)/3*y + (HEIGHT)/6;
 
                     canvas.set_draw_color(match player {
                         Player::O => BLUE,
                         Player::X => RED,
                     });
                     
-
                     match player {
                         Player::O => draw_circle(x as i32, y as i32, WIDTH/10, canvas)?,
                         Player::X => draw_x(x as i32, y as i32, WIDTH/10, canvas)?,

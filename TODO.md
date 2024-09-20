@@ -4,7 +4,7 @@
 
 Ohjelman main-funktiosta löytyvässä main loopissa pysähdytään odottamaan käyttäjän syötteitä. Syötteet tallennetaan muuttujaan *engine_event: EngineEvent* ja match-blokissa määritellään toiminnot EngineEvent-enumin variantin mukaan. Tehtävänäsi on lisätä peliin toiminto, jonka avulla peli voidaan aloittaa alusta ilman uudelleenkäynnistystä.
 
-Tehtävän olet suorittanut onnistuneesti, kun välilyönnin painaminen aiheu/ttaa peliruudukon tyhjenemisen.
+Tehtävän olet suorittanut onnistuneesti, kun välilyönnin painaminen aiheu/ttaa peliruudukon tyhjenemisen. Lisäksi problems-valikosta häviää varoitus *method 'reset' is never used.
 
 1. Lisää rivi tiedostossa *engine.rs* olevaan metodiin *pub fn poll(&mut self) -> EngineEvent*, joka saa sen palauttamaan enum-variantin
 

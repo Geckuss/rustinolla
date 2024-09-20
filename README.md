@@ -9,9 +9,27 @@
 
 - **Kopioi** kansion *SDL2-devel-2.30.6-VC\SDL2-2.30.6\lib\x64* sisältö (neljä tiedostoa) kohteeseen *C:\Users\omanimi\\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\lib*
 
-### Mac 'SDL2-2.30.6.dmg'
+### Mac - 'SDL2-2.30.6.dmg'
 
-- **Avaa** lataamasi tiedosto, ja raahaa 'SDL2.Framework' kansioon '/System/Library/Frameworks/'
+- **Avaa** lataamasi tiedosto, ja raahaa 'SDL2.framework' kansioon 'Macintosh HD/Library/Frameworks/'
+
+- **Muokkaa** tiedosto *Cargo.toml* muotoon:
+    
+        [package]
+        ...
+        build = "build.rs"
+
+        ...
+
+        [dependencies.sdl2]
+        version = "*"
+        features = ["use_mac_framework"]
+
+- **Luo** projektikansioon tiedosto *build.rs* ja **kopioi** tämä sinne:
+
+        fn main() {
+            println!("cargo:rustc-link-search=framework=/Library/Frameworks")
+        }
 
 
 ## Visual Studio Code
@@ -31,4 +49,4 @@
 
 ## Cargo
 
-Cargo on Rustin mukana tuleva työkalu, joka tekee projektien hallinan, kääntämisen ja suorittamisen erittäin helpoksi. Kun olet asentanut kaiken, voit ajaa tämän projektin terminaalista komennolla **cargo run**. Jatkossa ohjelman ajaminen onnistuu yksinkertaisesti avaamalla konsolin (Ctrl/Cmd + ö), painamalla ylänuolta ja enteriä.
+Cargo on Rustin mukana tuleva työkalu, joka tekee projektien hallinnasta, kääntämisestä ja ajamisesta erittäin helppoa. Kun olet asentanut kaiken, voit ajaa tämän projektin terminaalista komennolla **cargo run**. Jatkossa ohjelman ajaminen onnistuu yksinkertaisesti avaamalla konsolin (Ctrl/Cmd + ö), painamalla ylänuolta ja enteriä.

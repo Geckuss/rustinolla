@@ -5,8 +5,7 @@ use sdl2::rect::Rect;
 use sdl2::render::Canvas;
 use sdl2::video::Window;
 use sdl2::EventPump;
-use sdl2::pixels::Color;
-use rustinolla::{BACKROUND, HEIGHT, WIDTH};
+use rustinolla::{BACKROUND, FOREGROUND, HEIGHT, WIDTH};
 use rustinolla::{Render, EngineEvent};
 
 pub struct Engine {
@@ -43,7 +42,7 @@ impl Engine {
     pub fn draw_backround(&mut self) -> Result<(), String> {
         self.canvas.set_draw_color(BACKROUND);
         self.canvas.clear();
-        self.canvas.set_draw_color(Color::RGB(80, 80, 80));
+        self.canvas.set_draw_color(FOREGROUND);
         for i in 1..=2 {
             self.canvas.fill_rect(
                 Rect::new((i*(WIDTH as i32/3))-5, 0, 10, HEIGHT)
@@ -52,6 +51,7 @@ impl Engine {
                 Rect::new(0, (i*(HEIGHT as i32/3))-5, WIDTH, 10)
             )?;
         }
+
         Ok(())
     }
 
@@ -67,7 +67,6 @@ impl Engine {
     pub fn poll(&mut self) -> EngineEvent {
         match self.event_pump.wait_event() {
             Event::Quit { .. } => EngineEvent::Exit,
-           
             Event::KeyDown { keycode, ..} => {
                 if let Some(keycode) = keycode {
                     match keycode {
@@ -79,7 +78,6 @@ impl Engine {
                     EngineEvent::None
                 }
             }
-
             Event::MouseButtonDown { mouse_btn, mut x,  mut y, .. } => {
                 if mouse_btn == MouseButton::Left {
                     if x < WIDTH as i32/3 { x = 0 }
