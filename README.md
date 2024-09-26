@@ -11,10 +11,10 @@
 
 ### Mac - 'SDL2-2.30.6.dmg'
 
-- **Avaa** lataamasi tiedosto, ja raahaa 'SDL2.framework' kansioon 'Macintosh HD/Library/Frameworks/'
+- **Avaa** lataamasi tiedosto, ja **kopioi** 'SDL2.framework' kansioon 'Macintosh HD/Library/Frameworks/'
 
 - **Muokkaa** tiedosto *Cargo.toml* muotoon:
-    
+
         [package]
         ...
         build = "build.rs"
@@ -25,12 +25,11 @@
         version = "*"
         features = ["use_mac_framework"]
 
-- **Luo** projektikansioon tiedosto *build.rs* ja **kopioi** tämä sinne:
+- **Luo** projektin juurikansioon tiedosto *build.rs* ja **kopioi** tämä sinne:
 
         fn main() {
             println!("cargo:rustc-link-search=framework=/Library/Frameworks")
         }
-
 
 ## Visual Studio Code
 

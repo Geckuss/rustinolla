@@ -13,11 +13,27 @@ Tehtävän olet suorittanut onnistuneesti, kun välilyönnin painaminen aiheu/tt
     käyttäjän painaessa välilyöntiä.
 2. Lisää pelin main-looppiin rivi, joka vastaa pelitilan nollaamisesta poll-funktion palauttaessa Clear-komennon. Voit käyttää tähän GameState:n metodia **reset()**;
 
-## 2. Voittajan selvittäminen: algoritmi
+## 2. Voittajan selvittäminen
+
+### 2.1 Voiton tunnistaminen: algoritmi
 
 Rustinolla tarvitsee kyvyn pelin voittajan selvittämiseen. Helpointa on määritellä pelitilaa mallintavalle **GameState** -structille metodi tätä varten. Tehtävän olet suorittanut onnistuneesti, kun pelin voittajan ollessa selvillä terminaaliin tulostuu voittajan nimi ("X voitti!" tai "O voitti!").
 
-1. Toteuta tiedostosta *game_state.rs* löytyvä metodi *pub fn has_a_winner(&self) -> Option&lt;Player&gt;*
+1. Toteuta tiedostosta *game_state.rs* löytyvä metodi *pub fn has_a_winner(&self) -> Option&lt;Player&gt;*. Metodi palauttaa ns. Option-tyypin, joka on Rustissa käytetty vaihtoehto NULL-arvolle. Kun voittaja on selvillä, metodi palauttaa:
+
+        Some(Player::X) tai Some(Player::O)
+
+    Mikäli voittaja ei vielä ole selvillä, palauttaa metodi yksinkertaisesti arvon:
+
+        None
+
+### 2.2 Voittavan rivin merkintä: perusteet
+
+Kun voittaja on saatu selville, olisi sen merkitseminen peli-ikkunaan suotavaa. Tätä varten tiedostossa *game_state.rs* on olemassa valmis funktio fn draw_bar(..), joka piirtää viivan annetun alku- ja loppupisteen välille. Pisteet ovat ruutujen indeksejä, joten jos voittava rivi olisi esimerkiksi vasemmasta yläkulmasta oikeaan alakulmaan, funktion syötteen tulisi olla:
+
+        draw_bar((0, 0), (2, 2), canvas)
+
+1. Keksi keino hankkia tieto näistä indekseistä ja piirrä keltainen viiva niiden mukaan.
 
 ## 3. Oman kuvion piirtäminen: renderöinti
 
@@ -51,3 +67,5 @@ Yksittäisten pikselien värittäminen tapahtuu metodilla *canvas.draw_point(poi
 ## 4. Ympyrän parantelu: renderöinti
 
 Tällä hetkellä ympyrä piirtyy sinisenä pallona. Ideaalisesti haluaisimme piirtää O-kirjaimen. Voimme määritellä tiedostossa *game_state.rs" olevaan funktioon *draw_circle( .. )* minimietäisyyden, jota lähempänä olevat pikselit jätetään värittämättä. Tehtävä on onnistunut, kun ympyrän sijasta O:n vuorolla ruudukkoon ilmestyy O-kirjain.
+
+1. Muokkaa funktiota *draw_circle( .. )* piirtämään ympyrän sijasta O-kirjain.

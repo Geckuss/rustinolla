@@ -14,14 +14,13 @@ pub fn main() -> Result<(), String>{
 
     // main loop
     while running {
-        let engine_event = engine.poll();
-        match engine_event {
+        match engine.poll() {
             EngineEvent::Click(x, y) => {
                 game_state.set_square(x, y);
                 if let Some(winner) = game_state.has_a_winner() {
                     println!("{:?} voitti!", winner);
                 } else if game_state.is_full() {
-                    println!("Tie!");
+                    println!("Tasapeli!");
                 }
             },
             EngineEvent::Exit => running = false,

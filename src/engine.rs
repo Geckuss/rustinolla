@@ -5,7 +5,7 @@ use sdl2::rect::Rect;
 use sdl2::render::Canvas;
 use sdl2::video::Window;
 use sdl2::EventPump;
-use rustinolla::{BACKROUND, FOREGROUND, HEIGHT, WIDTH};
+use rustinolla::{BACKGROUND, FOREGROUND, HEIGHT, WIDTH};
 use rustinolla::{Render, EngineEvent};
 
 pub struct Engine {
@@ -40,7 +40,7 @@ impl Engine {
     }
 
     pub fn draw_backround(&mut self) -> Result<(), String> {
-        self.canvas.set_draw_color(BACKROUND);
+        self.canvas.set_draw_color(BACKGROUND);
         self.canvas.clear();
         self.canvas.set_draw_color(FOREGROUND);
         for i in 1..=2 {
