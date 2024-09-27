@@ -88,11 +88,15 @@ fn draw_circle(
     canvas: &mut Canvas<Window>,
 ) -> Result<(), String> {
     let radius = radius as i32;
+    let iradius = radius - 10;
     // TODO T4: Määrittele toinen, pienempi säde "inner radius", joka määrittelee ympyrän reunan paksuuden.
     for x in center_x - radius..center_x + radius {
         for y in center_y - radius..center_y + radius {
             // TODO T4: Lisää if-lauseeseen inner radius siten, että sitä lähempänä olevat pikselit jätetään rauhaan.
-            if distance((x, y), (center_x, center_y)) <= radius {
+
+            if distance((x, y), (center_x, center_y)) <= radius
+                && distance((x, y), (center_x, center_y)) >= iradius
+            {
                 canvas.draw_point((x, y))?;
             }
         }

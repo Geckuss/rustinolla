@@ -17,7 +17,7 @@ pub fn main() -> Result<(), String> {
         match engine.poll() {
             EngineEvent::Click(x, y) => {
                 game_state.set_square(x, y);
-                if let Some(winner) = game_state.has_a_winner() {
+                if let Some((winner, _, _)) = game_state.has_a_winner() {
                     println!("{:?} voitti!", winner);
                 } else if game_state.is_full() {
                     println!("Tasapeli!");
