@@ -12,29 +12,32 @@ pub struct GameState {
 
 impl GameState {
     pub fn has_a_winner(&self) -> Option<Player> {
-        // TODO T2: Toteuta metodi.
+        // Check rows and columns
         for i in 0..3 {
-            // Tarkistetaan vaakasuorat voittosuorat
-            if self.grid[i][0] == self.grid[i][1] && self.grid[i][1] == self.grid[i][2] && self.grid[i][0].is_some() {
-                return self.grid[i][0];
+            if let Some(player) = self.grid[i][0] {
+                if self.grid[i][1] == Some(player) && self.grid[i][2] == Some(player) {
+                    return Some(player);
+                }
             }
-            // Tarkistetaan pystysuorat voittosuorat
-            if self.grid[0][i] == self.grid[1][i] && self.grid[1][i] == self.grid[2][i] && self.grid[0][i].is_some() {
-                return self.grid[0][i];
+            if let Some(player) = self.grid[0][i] {
+                if self.grid[1][i] == Some(player) && self.grid[2][i] == Some(player) {
+                    return Some(player);
+                }
             }
-            // Tarkistetaan vinot voittosuorat 1/2
-            if self.grid[0][0] == self.grid[1][1] && self.grid[1][1] == self.grid[2][2] && self.grid[0][0].is_some() {
-                return self.grid[0][0];
-            }
-            // Tarkistetaan vinot voittosuorat 2/2
-            if self.grid[0][2] == self.grid[1][1] && self.grid[1][1] == self.grid[2][0] && self.grid[0][2].is_some() {
-                return self.grid[0][2];
+        }
+
+        // Check diagonals
+        if let Some(player) = self.grid[1][1] {
+            if (self.grid[0][0] == Some(player) && self.grid[2][2] == Some(player)) ||
+               (self.grid[0][2] == Some(player) && self.grid[2][0] == Some(player)) {
+                return Some(player);
             }
         }
 
         None
     }
 }
+
 
 // Render traitin implementaatio. Tässä määritellään, miten GameState piirretään näytölle.
 impl Render for GameState {
