@@ -14,6 +14,44 @@ pub struct Engine {
 }
 
 impl Engine {
+    pub fn poll(&mut self) -> EngineEvent {
+        match self.event_pump.wait_event() {
+            Event::Quit { .. } => EngineEvent::Exit,
+            Event::KeyDown { keycode, ..} => {
+                if let Some(keycode) = keycode {
+                    match keycode {
+                        Keycode::ESCAPE => EngineEvent::Exit,
+                        // TODO (teht. 1): Jos keycode on välilyönti, palauta EngineEvent::Clear
+                        _ => EngineEvent::None
+                    }
+                } else {
+                    EngineEvent::None
+                }
+            }
+            Event::MouseButtonDown { mouse_btn, mut x,  mut y, .. } => {
+                if mouse_btn == MouseButton::Left {
+                    if x < WIDTH as i32/3 { x = 0 }
+                    else if x < WIDTH as i32/3*2 { x = 1 }
+                    else { x = 2 }
+
+                    if y < HEIGHT as i32/3 { y = 0 }
+                    else if y < HEIGHT as i32/3*2 { y = 1 }
+                    else { y = 2 }
+
+                    return EngineEvent::Click(x, y)
+                } 
+                EngineEvent::None
+            }
+        _ => EngineEvent::None 
+        }
+    }
+}
+
+
+// -------------------------------------------------
+// Tästä alaspäin ei tarvitse tehdä mitään muutoksia
+
+impl Engine {
     pub fn init() -> Result<Self, String> {
         let sdl_context = sdl2::init()?;
         let video_subsystem = sdl_context
@@ -62,37 +100,5 @@ impl Engine {
 
     pub fn present(&mut self) {
         self.canvas.present()
-    }
-
-    pub fn poll(&mut self) -> EngineEvent {
-        match self.event_pump.wait_event() {
-            Event::Quit { .. } => EngineEvent::Exit,
-            Event::KeyDown { keycode, ..} => {
-                if let Some(keycode) = keycode {
-                    match keycode {
-                        Keycode::ESCAPE => EngineEvent::Exit,
-                        // TODO (teht. 1): Jos keycode on välilyönti, palauta EngineEvent::Clear
-                        _ => EngineEvent::None
-                    }
-                } else {
-                    EngineEvent::None
-                }
-            }
-            Event::MouseButtonDown { mouse_btn, mut x,  mut y, .. } => {
-                if mouse_btn == MouseButton::Left {
-                    if x < WIDTH as i32/3 { x = 0 }
-                    else if x < WIDTH as i32/3*2 { x = 1 }
-                    else { x = 2 }
-
-                    if y < HEIGHT as i32/3 { y = 0 }
-                    else if y < HEIGHT as i32/3*2 { y = 1 }
-                    else { y = 2 }
-
-                    return EngineEvent::Click(x, y)
-                } 
-                EngineEvent::None
-            }
-        _ => EngineEvent::None 
-        }
     }
 }

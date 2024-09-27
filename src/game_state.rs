@@ -4,48 +4,13 @@ use sdl2::video::Window;
 use rustinolla::{BLUE, RED, YELLOW, WIDTH, HEIGHT};
 use rustinolla::{Render, Player};
 
-// Deklaraatio
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
 pub struct GameState {
     grid: [[Option<Player>; 3]; 3],
     turn: Player
 }
 
-// Metodit
 impl GameState {
-    pub fn set_square(&mut self, x: i32, y: i32) {
-        if x < 3 && y < 3 && self.grid[x as usize][y as usize].is_none() {
-            self.grid[x as usize][y as usize] = Some(self.turn);
-            self.switch_turns()
-        }
-    }
-
-    pub fn empty() -> Self {
-        GameState { 
-            grid: [[None; 3]; 3],
-            turn: Player::X
-        }
-    }
-
-    pub fn reset(&mut self) {
-        self.grid = [[None; 3]; 3];
-        self.turn = Player::X;
-    }
-
-    fn switch_turns(&mut self) {
-        self.turn = match self.turn {
-            Player::O => Player::X,
-            Player::X => Player::O
-        }
-    }
-
-    pub fn is_full(&self) -> bool {
-        self.grid
-            .iter()
-            .filter(|row| row.contains(&None))
-            .count() == 0
-    }    
-    
     pub fn has_a_winner(&self) -> Option<Player> {
         // TODO T2: Toteuta metodi.
 
@@ -120,25 +85,60 @@ fn draw_x(center_x: i32, center_y: i32, size: u32, canvas: &mut Canvas<Window>)
 
 // -------------------------------------------------
 // Tästä alaspäin ei tarvitse tehdä mitään muutoksia
-pub fn draw_bar(start_square: (i32, i32), end_square: (i32, i32), canvas: &mut Canvas<Window>,)
+
+impl GameState {
+    pub fn set_square(&mut self, x: i32, y: i32) {
+        if x < 3 && y < 3 && self.grid[x as usize][y as usize].is_none() {
+            self.grid[x as usize][y as usize] = Some(self.turn);
+            self.switch_turns()
+        }
+    }
+
+    pub fn empty() -> Self {
+        GameState { 
+            grid: [[None; 3]; 3],
+            turn: Player::X
+        }
+    }
+
+    pub fn reset(&mut self) {
+        self.grid = [[None; 3]; 3];
+        self.turn = Player::X;
+    }
+
+    fn switch_turns(&mut self) {
+        self.turn = match self.turn {
+            Player::O => Player::X,
+            Player::X => Player::O
+        }
+    }
+
+    pub fn is_full(&self) -> bool {
+        self.grid
+            .iter()
+            .filter(|row| row.contains(&None))
+            .count() == 0
+    }    
+}
+pub fn draw_bar(start: (i32, i32), end: (i32, i32), canvas: &mut Canvas<Window>,)
 -> Result<(), String> {
     let padding = 30_i32;
-    let orientation = get_bar_orientation(start_square, end_square);
-    let sx = match start_square.0 < end_square.0 {
-        true => start_square.0,
-        false => end_square.0,
+    let orientation = get_bar_orientation(start, end);
+    let sx = match start.0 < end.0 {
+        true => start.0,
+        false => end.0,
     };
-    let sy = match start_square.1 < end_square.1 {
-        true => start_square.1,
-        false => end_square.1
+    let sy = match start.1 < end.1 {
+        true => start.1,
+        false => end.1
     };
-    let ex = match start_square.0 > end_square.0 {
-        true => start_square.0,
-        false => end_square.0,
+    let ex = match start.0 > end.0 {
+        true => start.0,
+        false => end.0,
     };
-    let ey = match start_square.1 > end_square.1 {
-        true => start_square.1,
-        false => end_square.1
+    let ey = match start.1 > end.1 {
+        true => start.1,
+        false => end.1
     };
     match orientation {
         BarOrientation::Horizontal => {
@@ -196,10 +196,10 @@ enum BarOrientation {
 }
 
 #[allow(unused)]
-fn get_bar_orientation(start_square: (i32, i32), end_square: (i32, i32))
+fn get_bar_orientation(start: (i32, i32), end: (i32, i32))
  -> BarOrientation {
     use BarOrientation::*;
-    match (start_square, end_square) {
+    match (start, end) {
         ((0, 0), (2, 0)) | ((2, 0), (0, 0)) => Horizontal,
         ((0, 1), (2, 1)) | ((2, 1), (0, 1)) => Horizontal,
         ((0, 2), (2, 2)) | ((2, 2), (0, 2)) => Horizontal,
@@ -213,7 +213,7 @@ fn get_bar_orientation(start_square: (i32, i32), end_square: (i32, i32))
         _ => panic!(
 "\nEt voi piirtää viivaa pisteestä {:?} pisteeseen {:?}.
 Viivan täytyy olla pystysuora, vaakasuora tai kulkea kulmasta kulmaan.\n", 
-        start_square, end_square
+        start, end
         ),
     }
 }

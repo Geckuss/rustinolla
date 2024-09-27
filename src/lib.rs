@@ -1,3 +1,5 @@
+// Tähän tiedostoon ei tarvitse tehdä muutoksia, ellet halua muokata värejä tai ikkunan kokoa
+
 // Importteja
 use sdl2::render::Canvas;
 use sdl2::video::Window;
