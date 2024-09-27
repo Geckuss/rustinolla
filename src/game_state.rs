@@ -13,6 +13,24 @@ pub struct GameState {
 impl GameState {
     pub fn has_a_winner(&self) -> Option<Player> {
         // TODO T2: Toteuta metodi.
+        for i in 0..3 {
+            // Tarkistetaan vaakasuorat voittosuorat
+            if self.grid[i][0] == self.grid[i][1] && self.grid[i][1] == self.grid[i][2] && self.grid[i][0].is_some() {
+                return self.grid[i][0];
+            }
+            // Tarkistetaan pystysuorat voittosuorat
+            if self.grid[0][i] == self.grid[1][i] && self.grid[1][i] == self.grid[2][i] && self.grid[0][i].is_some() {
+                return self.grid[0][i];
+            }
+            // Tarkistetaan vinot voittosuorat 1/2
+            if self.grid[0][0] == self.grid[1][1] && self.grid[1][1] == self.grid[2][2] && self.grid[0][0].is_some() {
+                return self.grid[0][0];
+            }
+            // Tarkistetaan vinot voittosuorat 2/2
+            if self.grid[0][2] == self.grid[1][1] && self.grid[1][1] == self.grid[2][0] && self.grid[0][2].is_some() {
+                return self.grid[0][2];
+            }
+        }
 
         None
     }
