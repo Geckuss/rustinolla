@@ -25,7 +25,8 @@ pub fn main() -> Result<(), String>{
             },
             EngineEvent::Exit => running = false,
             // TODO (teht. 1): Jos engine.poll() palauttaa EngineEvent::Clear, tyhjennä lauta.
-            _ => {},
+            EngineEvent::Clear => {println!("Clearing board"); game_state.reset()},
+            _ => {}
         };
 
         engine.draw_backround()?;

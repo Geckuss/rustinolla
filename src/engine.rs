@@ -22,6 +22,7 @@ impl Engine {
                     match keycode {
                         Keycode::ESCAPE => EngineEvent::Exit,
                         // TODO (teht. 1): Jos keycode on välilyönti, palauta EngineEvent::Clear
+                        Keycode::SPACE => EngineEvent::Clear,
                         _ => EngineEvent::None
                     }
                 } else {
